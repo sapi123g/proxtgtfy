@@ -7,6 +7,7 @@ function getinv(id)
     return 0
 end
 
+
 tilex = 59
 tiley = 42
 local logspin = {}
@@ -20,14 +21,14 @@ add_spacer|small|
 add_label_with_icon|small|What's Different?|left|6124|
 add_spacer|small|
 add_smalltext|[+] Added Shortcut Convert Diamond Locks to Blue Gem Locks if u wrench telephone. `2thanks to [SATANMONARCH]``|left|
-add_smalltext|[+] all commands shorcut to 1 word (w, d, b, except abso|left|
-add_smalltext|[+] /bank 1 (Opens your bank)|left|
+add_smalltext|[+] all commands shorcut to 1 word (w, d, b, except abso)|left|
+add_smalltext|[+] /bank  (Opens your bank)|left|
 
 add_spacer|small|
 add_smalltext|`2Creator`` : `1@pangerans|left|
 add_smalltext|`2Editor`` : `1@Tajdeen                                                                proxy help /phelp|left|
 add_spacer|small|
-end_dialog|gazette|GACOR MANG!||
+end_dialog|gazette|GAS KETUAAA!||
 add_quick_exit|
 ]]
 local cmdialogs = [[
@@ -43,7 +44,7 @@ add_label_with_icon|small|[/b {count}] Dropping BGLS|left|7188|
 add_label_with_icon|small|[/abso {count}] Dropping Absolute Locks|left|16770|
 add_label_with_icon|small|[/wd {count}] Witdraw BGL on the banks|left|6290|
 add_label_with_icon|small|[/depo {count}] Deposit BGL to the banks|left|6290|
-add_label_with_icon|small|[/bank 1 ] Open your bank|left|6290|
+add_label_with_icon|small|[/bank  ] Open your bank|left|6290|
 add_spacer|small|
 add_smalltext|`2Creator`` : `1@pangerans|left|
 add_smalltext|`2Editor`` : `1@Tajdeen|left|
@@ -130,9 +131,13 @@ function cmdlist(a, b)
             if command:match("^bank%s") then
                 amounts = tonumber(b:match("bank (%d+)"))
                 if not amounts then
-                    return logs("Example : /bank {amount}")
+                    return logs("Example : /bankg {amount}")
                 end
                 SendPacket(2, "action|dialog_return\ndialog_name|popup\nnetID|-1|\nbuttonClicked|my_bank")
+            end
+            if command == "bank" then
+                SendPacket(2, "action|dialog_return\ndialog_name|popup\nnetID|-1|\nbuttonClicked|my_bank")
+               return true
             end
             if command:match("^exc%s") then
                 amounts = tonumber(b:match("exc (%d+)"))
@@ -183,6 +188,7 @@ function cmdlist(a, b)
     end
 end
 
+
 function variantlist(v)
     if v[0] == "OnTalkBubble" then
         if v[2]:find("spun the wheel and got") then
@@ -198,6 +204,8 @@ function variantlist(v)
             return true
         end
     end
+local Player = GetLocal()
+Player.name = "`9BGL : `2" ..(GetItemCount(7188)).. "  `cDL `w: `c" ..(GetItemCount(1796)).. " "
    if v[0] == "OnConsoleMessage" then
       logs(v[1])
       return true
@@ -217,7 +225,6 @@ end
 
 
 
-
 SendVarlist({[0] = "OnDialogRequest",[1] = dialogs,netid = -1})
 logs("Succes Load Creepie Proxy")
 logs("Join Discord : https://dsc.gg/ihkaz (creator source)")
@@ -225,6 +232,11 @@ logs("Report to @Tajdeen on discord if u found any bugs")
 logs("Request Feature? DM @Tajdeen (if hard join ihkazcommunity)")
 AddCallback("COMMANDLIST", "OnPacket", cmdlist)
 AddCallback("VARIANTLIST", "OnVarlist", variantlist)
+
+
+
+
+
 
 
 
